@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 public class FlatFile {
@@ -8,13 +7,27 @@ public class FlatFile {
 
     public FlatFile(String filePath, String delimiter, boolean hasHeader) throws FileNotFoundException {
         Scanner sc = new Scanner(new File(filePath));
-        if(hasHeader) {
-            header = Arrays.asList(sc.nextLine().split(delimiter));
-        }
-        while (sc.hasNextLine()) {
-            records.add(Arrays.asList(sc.nextLine().split(delimiter)));
-        }
+        ScanFile(sc, delimiter, hasHeader);
         sc.close();
+    }
+
+    public FlatFile(InputStream inputStream, String delimiter, boolean hasHeader) throws IOException {
+        InputStreamReader isr = new InputStreamReader(inputStream);
+        BufferedReader br = new BufferedReader(isr);
+        Scanner sc = new Scanner(br);
+        ScanFile(sc, delimiter, hasHeader);
+        sc.close();
+        br.close();
+        isr.close();
+    }
+
+    private void ScanFile(Scanner scanner, String delimiter, boolean hasHeader){
+        if(hasHeader) {
+            header = Arrays.asList(scanner.nextLine().split(delimiter));
+        }
+        while (scanner.hasNextLine()) {
+            records.add(Arrays.asList(scanner.nextLine().split(delimiter)));
+        }
     }
 
     // Using 2 fields as the key-value pair, return a dictionary (HashMap) from the FlatFile

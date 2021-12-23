@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="apache-poi-bin-5.1" level="application" />
+    <orderEntry type="library" name="plugins" level="application" />
   </component>
 </module>

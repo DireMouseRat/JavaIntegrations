@@ -81,10 +81,7 @@ public class FlatFile {
 
     public boolean hasDuplicates(int fieldIndex) throws IndexOutOfBoundsException {
         HashSet<String> set = new HashSet<>();
-        for (List<String> record : records)
-            if (!set.add(record.get(fieldIndex)))
-                return true;
-        return false;
+        return records.stream().anyMatch(record -> !set.add(record.get(fieldIndex)));
     }
 
     //Requires header
@@ -109,5 +106,9 @@ public class FlatFile {
     public String getFieldName(int fieldIndex) throws IndexOutOfBoundsException{
         assertHeader();
         return header.get(fieldIndex);
+    }
+
+    public List<List <String>> getRecords() {
+        return records;
     }
 }
